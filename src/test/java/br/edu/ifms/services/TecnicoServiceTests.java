@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import br.edu.ifms.dto.TecnicoDTO;
 import br.edu.ifms.entities.Tecnico;
 import br.edu.ifms.repositories.TecnicoRepository;
 import br.edu.ifms.services.exceptions.DataBaseException;
@@ -65,6 +66,20 @@ public class TecnicoServiceTests {
 	}
 	
 	//fazer o salvar dados
+	
+	
+	
+	@Test
+	public void insertDeveriaSalvarTecnicoQuandoIdNulo() {
+		 Tecnico tecnico = Factory.createTecnico();
+		    TecnicoDTO dto = new TecnicoDTO(tecnico); 
+
+		    Assertions.assertDoesNotThrow(() -> {
+		        TecnicoDTO result = service.insert(dto);
+		        Assertions.assertNotNull(result.getId());
+		    });
+		    Mockito.verify(repository).save(ArgumentMatchers.any(Tecnico.class));
+	}
 	
 	
 	@Test
